@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+
+{% block styles %} 
+    {{ super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='CSS/index.css')}}" />
+
+{% endblock %} 
+
+{% block content %}
+
+    <div class="buttons">
+        <button class="button" id="button1"><a href="{{url_for('img_vid_detector')}}" style="color: white; text-decoration:none">Upload image</a></button><br />
+        <span>or</span><br />
+        <button class="button" id="button2"><a href="{{url_for('live_helmet_detector')}}" style="color: white; text-decoration: none;">Live capturing</a></button>
+    </div>
+
+{% endblock %}
+
+
+<!-- "  none; -->

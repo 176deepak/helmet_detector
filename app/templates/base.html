@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helmet Detector</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'CSS/main.css')}}">
+    {% block styles %}{% endblock %}
+    {% block scripts %}{% endblock %}
+</head>
+<body>
+    <div id="header">
+        <header>
+            <h1>
+                Helmet Detector(using YOLOv8)
+            </h1>
+        </header>
+    </div>
+
+    <div id="main">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+    
+
+    <div id="footer">
+        <footer>
+            <span>
+                Made with
+            </span>
+            <span style="color: red; font-size:x-large;">&hearts;</span>
+        </footer>
+    </div>
+</body>
+</html>
