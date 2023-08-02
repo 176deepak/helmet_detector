@@ -161,3 +161,4 @@ cython_debug/
 
 detector_env/
 data/
+artifacts/
