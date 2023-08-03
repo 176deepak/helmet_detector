@@ -19,17 +19,16 @@ def img_vid_detector(path):
 def index():
     if request.method == "POST":
         if not os.path.exists(app.config['UPLOAD_FOLDER']):
-            dir = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
-            os.makedirs(dir)
+            os.mkdir(app.config['UPLOAD_FOLDER'])
 
         _img = request.files['myPhoto']
         filename = _img.filename
         _img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         session['uploaded_img_file_path'] = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         
-        path = image_pred(filename)
+        # path = image_pred(filename)
                 
-        return redirect(url_for('img_vid_detector', path=path))
+        # return redirect(url_for('img_vid_detector', path=path))
     return render_template('index.html')
   
 
