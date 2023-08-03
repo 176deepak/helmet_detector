@@ -1,36 +1,19 @@
 {% extends 'base.html' %}
 
 {% block styles %}
-    {{ super() }}
-    <link rel="stylesheet" href="{{url_for('static', filename='CSS/detector.css')}}">
-{% endblock %}
+{{ super()}}
 
-{% block scripts %}
+    <link rel="stylesheet" href="url_for('static', filename='CSS/index.css')">
 
-    <script src="{{url_for('static', filename='javascript/script.js')}}" type="text/javascript"></script>
-
-{% endblock %}
+{% endblock}
 
 {% block content %}
 
-<div class="detector">
-    <div id="capture">
-        <form action="", method="post" enctype="multipart/form-data">
-            <div>
-                <div class="image-container">
-                    <img id="uploadPreview"/>
-                </div>
-                <div class="input">
-                    <input id="uploadImage" type="file" name="myPhoto" accept="image/*" onchange="PreviewImage();"/>
-                    <div class="buttons">
-                        <button class="button" type="submit">Submit</button>
-                        <button>
-                            Back
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
+    <div class="container">
+        <div class="text"><h1>Helmet Detection Result</h1></div>
+        <div class="img">
+            <img src="{{path}}" alt="detection-result-image">
+        </div>
     </div>
-</div>
+
 {% endblock %}
