@@ -10,7 +10,7 @@ from src.entity.config_entity import ModelTrainerConfig
 
 
 class ModelTrainer:
-    def __init__(self, model_trainer_config = ModelTrainerConfig()):
+    def __init__(self, model_trainer_config = ModelTrainerConfig):
         self.model_trainer_config = model_trainer_config
     
 
@@ -20,13 +20,13 @@ class ModelTrainer:
         try:
             logging.info("Pretrained model downloading starts!")
             logging.info("Model training starts!")
-            os.system(f"yolo task=detect mode=train model={self.model_trainer_config.weight_name} data=data\data.yaml epochs={self.model_trainer_config.no_epochs} imgsz=640 save=true")
+            os.system(f"yolo task=detect mode=train model={self.model_trainer_config.weight_name} data=src\config\data.yaml epochs={self.model_trainer_config.no_epochs} imgsz=640 save=true")
 
             os.makedirs(
                 self.model_trainer_config.model_trainer_dir, exist_ok=True
             )
             
-            shutil.copy(r"runs\detect.train\weights\best.pt", r"models\trained_models")
+            shutil.copy(r"E:\Projects\helmet_detection\runs\detect\train5\weights\best.pt", r"models\trained_models")
 
             model_trainer_artifact = ModelTrainerArtifact(trained_model_file_path="artifacts/model_trainer/best.pt")
 
@@ -38,8 +38,4 @@ class ModelTrainer:
         except Exception as e:
             raise CustomException(e, sys) 
         
-
-if __name__ == "__main__":
-    obj = ModelTrainer()
-    obj.initiate_model_trainer()
 

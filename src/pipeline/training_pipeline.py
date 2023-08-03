@@ -16,20 +16,20 @@ class TrainPipline:
         self.model_trainer_config = ModelTrainerConfig()
 
     
-    # def start_data_ingestion(self)-> DataIngestionArtifact:
-    #     try:
-    #         logging.info("Entered the start_data_ingestion method of Trainpipeline class.")
-    #         logging.info("Getting the data from URL")
-    #         data_ingestion = DataIngestion(data_ingestion_config=self.data_ingestion_config)
+    def start_data_ingestion(self)-> DataIngestionArtifact:
+        try:
+            logging.info("Entered the start_data_ingestion method of Trainpipeline class.")
+            logging.info("Getting the data from URL")
+            data_ingestion = DataIngestion(data_ingestion_config=self.data_ingestion_config)
             
-    #         data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
-    #         logging.info("Got the data from URL")
-    #         logging.info("Exited the start_data_ingestion method of TrainPipeline class")
+            data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
+            logging.info("Got the data from URL")
+            logging.info("Exited the start_data_ingestion method of TrainPipeline class")
 
-    #         return data_ingestion_artifact
+            return data_ingestion_artifact
 
-    #     except Exception as e:
-    #         raise CustomException(e, sys)
+        except Exception as e:
+            raise CustomException(e, sys)
 
 
     def start_data_validation(self, data_ingestion_artifact: DataIngestionArtifact)->DataValidationArtifact:
@@ -76,3 +76,9 @@ class TrainPipline:
             
         except Exception as e:
             raise CustomException(e, sys)
+
+
+if __name__=="__main__":
+    obj = TrainPipline()
+    obj.run_pipeline()
+
