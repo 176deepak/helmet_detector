@@ -5,16 +5,32 @@
     <link rel="stylesheet" href="{{url_for('static', filename='CSS/detector.css')}}">
 {% endblock %}
 
+{% block scripts %}
+
+    <script src="{{url_for('static', filename='javascript/script.js')}}" type="text/javascript"></script>
+
+{% endblock %}
+
 {% block content %}
 
 <div class="detector">
     <div id="capture">
-
-    </div>
-    <div id="button">
-        <button>
-            Back
-        </button>
+        <form action="", method="post" enctype="multipart/form-data">
+            <div>
+                <div class="image-container">
+                    <img id="uploadPreview"/>
+                </div>
+                <div class="input">
+                    <input id="uploadImage" type="file" name="myPhoto" accept="image/*" onchange="PreviewImage();"/>
+                    <div class="buttons">
+                        <button class="button" type="submit">Submit</button>
+                        <button>
+                            Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

@@ -1,17 +1,16 @@
 .detector{
+    margin-top: 2rem;
     width: 60%;
     height: 100%;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#capture{
-    height: 80%;
-    border: 2px solid #5271ff;
-    margin-top: 2rem;
-}
-
-#button{
+.input{
     text-align: center;
+}
+
+.buttons{
     margin-top: 1rem;
 }
-
