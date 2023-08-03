@@ -3,16 +3,16 @@
 {% block styles %}
 {{ super()}}
 
-    <link rel="stylesheet" href="url_for('static', filename='CSS/index.css')">
+    <link rel="stylesheet" href="{{url_for('static', filename='CSS/index.css')}}">
 
-{% endblock}
+{% endblock %}
 
 {% block content %}
 
     <div class="container">
         <div class="text"><h1>Helmet Detection Result</h1></div>
         <div class="img">
-            <img src="{{path}}" alt="detection-result-image">
+            <img src="{{ url_for('static', filename=path) }}" alt="detection-result-image">            
         </div>
     </div>
 
