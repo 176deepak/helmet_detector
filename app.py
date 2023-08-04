@@ -15,7 +15,9 @@ app.py: Entry or Execution entry point for application
 #required modules
 import os
 import shutil
-from flask import Flask, request, render_template, session, redirect, url_for
+import cv2
+# from ultralytics import YOLO
+from flask import Flask, request, render_template, session, redirect, url_for, Response
 from src.pipeline.prediction_pipeline import image_pred
 
 
@@ -30,6 +32,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # secret key 
 app.secret_key = '6RD2002'
 
+#model = YOLO(r'models\pretrained_models\yolov8n.pt')
+
 
 '''
 
@@ -40,7 +44,7 @@ This route will render img_vid_detector.html template or this route will used fo
 '''
 @app.route('/detector')
 def img_vid_detector():
-    path = 'runs/detect/predict/'+session['file_name']
+    path = 'runs/detect/predict/'+session['filename']
     return render_template('img_vid_detector.html', path=path)  
 
 
@@ -76,6 +80,37 @@ def index():
         return redirect(url_for('img_vid_detector'))
     
     return render_template('index.html')
+
+# def detect_objects(frame):
+#     frame = model(frame)
+#     return frame
+
+def generate_frames():
+    cap = cv2.VideoCapture(0)
+    while True:
+        success, frame = cap.read()
+        if not success:
+            break
+
+        # processed_frame = detect_objects(frame)
+        ret, buffer = cv2.imencode('.jpg', frame)
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+    cap.release()
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+    # Release the video capture object and close the display window
+    cap.release()
+    cv2.destroyAllWindows()
+
+@app.route('/detector')
+def live_detector():
+    return render_template('live_helmet_detector.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
