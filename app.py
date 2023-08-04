@@ -16,19 +16,31 @@ app.py: Entry or Execution entry point for application
 import os
 import shutil
 import cv2
+from src.utils.main_utils import create_folder
 # from ultralytics import YOLO
-from flask import Flask, request, render_template, session, redirect, url_for, Response
+from flask import Flask, request, render_template, session, redirect, url_for, Response, send_from_directory
 from src.pipeline.prediction_pipeline import image_pred
 
 
 # initializing Flask application with Flask class
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-# folder for storing user uploaded images, folder location [static\uploads]
-UPLOAD_FOLDER = os.path.join('static', 'uploads')
+'''
+    
+Storage folders:-
+    1. uploads = for storing uploaded images by users
+    2. pred = folder for storing prediction by model
+    3. result = folder for storing resultant images 
 
-# making UPLOAD_FOLDER as flask variable by which we can access it's value throughout the script using app.config['UPLOAD_FOLDER']
+'''
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
+PRED_IMG_FOLDER = r'runs\detect\predict'
+RESULT_IMG_FOLDER = os.path.join('static', 'result')
+
+# making folders as flask variable by which we can access it's value throughout the script
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['PRED_IMG_FOLDER'] = PRED_IMG_FOLDER
+app.config['RESULT_IMG_FOLDER'] = RESULT_IMG_FOLDER
 # secret key 
 app.secret_key = '6RD2002'
 
@@ -44,8 +56,19 @@ This route will render img_vid_detector.html template or this route will used fo
 '''
 @app.route('/detector')
 def img_vid_detector():
-    path = 'runs/detect/predict/'+session['filename']
-    return render_template('img_vid_detector.html', path=path)  
+
+    result = os.path.join('runs\detect\predict', session['filename'])
+    image_filename = session['filename']
+
+    if os.path.exists(app.config['PRED_IMG_FOLDER']):
+        shutil.rmtree(app.config['PRED_IMG_FOLDER']) 
+    os.mkdir(app.config['PRED_IMG_FOLDER'])
+
+    shutil.copy(result, app.config['PRED_IMG_FOLDER'])
+
+    path = 'pred/'+session['filename']
+
+    return render_template('img_vid_detector.html', path=path) 
 
 
 '''
@@ -81,36 +104,6 @@ def index():
     
     return render_template('index.html')
 
-# def detect_objects(frame):
-#     frame = model(frame)
-#     return frame
-
-def generate_frames():
-    cap = cv2.VideoCapture(0)
-    while True:
-        success, frame = cap.read()
-        if not success:
-            break
-
-        # processed_frame = detect_objects(frame)
-        ret, buffer = cv2.imencode('.jpg', frame)
-        frame = buffer.tobytes()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-    cap.release()
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-    # Release the video capture object and close the display window
-    cap.release()
-    cv2.destroyAllWindows()
-
-@app.route('/detector')
-def live_detector():
-    return render_template('live_helmet_detector.html')
-
+   
 if __name__ == '__main__':
     app.run(debug=True)

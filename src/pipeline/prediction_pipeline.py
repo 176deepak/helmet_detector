@@ -9,3 +9,4 @@ def image_pred(image_name):
     image_path = os.path.join(image_dir, image_name)
     model.predict(image_path, save=True)
     
+    
