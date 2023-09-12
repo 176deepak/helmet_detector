@@ -8,7 +8,6 @@ from src.components.data_ingestion import DataIngestion
 from src.components.data_validation import DataValidation
 from src.components.model_trainer import *
 
-
 class TrainPipline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
