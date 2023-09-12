@@ -16,7 +16,7 @@ app.py: Entry or Execution entry point for application
 import os
 import shutil
 import cv2
-from src.utils.main_utils import create_folder
+#from src.utils.main_utils import create_folder
 # from ultralytics import YOLO
 from flask import Flask, request, render_template, session, redirect, url_for, Response, send_from_directory
 from src.pipeline.prediction_pipeline import image_pred
@@ -35,7 +35,7 @@ Storage folders:-
 '''
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 PRED_IMG_FOLDER = r'runs\detect\predict'
-RESULT_IMG_FOLDER = os.path.join('static', 'result')
+RESULT_IMG_FOLDER = os.path.join('static', 'images')
 
 # making folders as flask variable by which we can access it's value throughout the script
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -56,17 +56,19 @@ This route will render img_vid_detector.html template or this route will used fo
 '''
 @app.route('/detector')
 def img_vid_detector():
-
+    
     result = os.path.join('runs\detect\predict', session['filename'])
-    image_filename = session['filename']
+
+    os.mkdir(app.config['RESULT_IMG_FOLDER'])
+
+    shutil.copy(result, app.config['RESULT_IMG_FOLDER'])
 
     if os.path.exists(app.config['PRED_IMG_FOLDER']):
         shutil.rmtree(app.config['PRED_IMG_FOLDER']) 
-    os.mkdir(app.config['PRED_IMG_FOLDER'])
 
-    shutil.copy(result, app.config['PRED_IMG_FOLDER'])
 
-    path = 'pred/'+session['filename']
+    path = "images/"+ session['filename']
+    print(path)
 
     return render_template('img_vid_detector.html', path=path) 
 
@@ -94,6 +96,8 @@ def index():
         # removing runs folder if it exists, so that program execution safe from program conflicts 
         if os.path.exists('runs'):
             shutil.rmtree(r'runs')
+
+        shutil.rmtree(r'static\images')
 
         # now calling image_pred function of prediction_pipeline
         image_pred(session['filename'])
