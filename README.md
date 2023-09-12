@@ -25,7 +25,4 @@
 ### 5. run command in your terminal *python app.py*
 
 ## Project Video:- 
-<video width="320" height="240" controls>
-  <source src="https://youtu.be/x7b22l8PqM0?si=9oT_WBbSaqrua3Zr" type="video/mp4">
-</video>
-
+[![Sample Video](https://img.youtube.com/vi/x7b22l8PqM0/0.jpg)](https://www.youtube.com/watch?v=x7b22l8PqM0)
