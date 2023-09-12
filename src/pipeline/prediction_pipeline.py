@@ -2,7 +2,7 @@ import os
 from ultralytics import YOLO
 
 
-model = YOLO(r'models\trained_models\best.pt')
+model = YOLO(r'artifacts\model_trainer\best.pt')
 image_dir = r"static\uploads"
 
 def image_pred(image_name):
