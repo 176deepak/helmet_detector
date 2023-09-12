@@ -26,8 +26,6 @@
 
 ## Project Video:- 
 <video width="320" height="240" controls>
-  
-  <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/x7b22l8PqM0?si=MSWQ1L7G-Iyy8v6B" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
+  <source src="https://youtu.be/x7b22l8PqM0?si=9oT_WBbSaqrua3Zr" type="video/mp4">
 </video>
 
