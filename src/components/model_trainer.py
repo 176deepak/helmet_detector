@@ -26,7 +26,7 @@ class ModelTrainer:
                 self.model_trainer_config.model_trainer_dir, exist_ok=True
             )
             
-            shutil.copy(r"E:\Projects\helmet_detection\runs\detect\train5\weights\best.pt", r"models\trained_models")
+            shutil.copy(r"E:\Projects\helmet_detection\runs\detect\train5\weights\best.pt", self.model_trainer_config.model_trainer_dir)
 
             model_trainer_artifact = ModelTrainerArtifact(trained_model_file_path="artifacts/model_trainer/best.pt")
 
